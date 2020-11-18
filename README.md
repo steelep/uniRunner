@@ -1,5 +1,5 @@
 
-# idea
+# The Idea
 Buy infront of trades that are pending and arent confirmed, then unwind all in the same block. This program determines which trades are profitable to trade infront of, in what size and then execute. It also automanages delegate ERC20 approvals for transfers to the uniswap router contract.
 
 # uniRunner
@@ -29,4 +29,4 @@ Works, have made a few small trades - currently not profitable to run due to hig
 # Example Trade
 Front Running 0xBTC on 16th of November, original trade is approx $458 notionally, (TX Hash 0xcc40f753de6643cde7faa0bc469aac8226baa55994cc9ce874350e2dd6875dc2), placed by a Uniswap user with a limit allowing for 9% slippage + a 3.5% price impact on the at touch liquidity. This means if we trade 1.48x size ($677) (auto calc'd by a 500 step montecarlo/for loop) in front and unwound behind after fees we would make a PnL of ~$38.7869 assuming no competition for block space and we do not enter a gas auction off against another bot.
 
-![alt text](https://imgur.com/UnVnJCo)
+[Imgur](https://imgur.com/UnVnJCo)
