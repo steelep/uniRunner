@@ -1,6 +1,6 @@
 
 # idea
-Buy infront of trades that are pending and arent confirmed, then unwind all in the same block. This program determines which trades are profitable to trade infront of, in what size and then can execute.
+Buy infront of trades that are pending and arent confirmed, then unwind all in the same block. This program determines which trades are profitable to trade infront of, in what size and then execute. It also automanages delegate ERC20 approvals for transfers to the uniswap router contract.
 
 # uniRunner
 Front Running Uniswap, with anti scam token avoidance.
@@ -11,7 +11,7 @@ UniRunner - Subscribes to an ethereum nodes memory pool via WSS, listens for all
 After getting rekt, by automatically buying tokens which I couldnt sell (about 1k USD!), I implemented an event scanner, which does exactly the same as above, but instead of executing, it forks the ethereum mainnet to memory and simulates the transactions, if the simulated account balance is positive (after fee's etc), then the token is added to a whitelist, this means its eligable to trade on uniRunner. Approved contracts are stored in approvedERC20.json and reread at uniRunner init.
 
 
-To Run 
+#To Run 
 - update the uniRunner Script as below
 Then
 - npm install
@@ -25,3 +25,8 @@ UniRunner need to add:
 
 Status:
 Works, have made a few small trades - currently not profitable to run due to high ETH GAS prices. Have lost more by the program automatically buying scam tokens I cant unwind - which is now addressed. Not going to make anyone rich running this.
+
+# Example Trade
+Front Running 0xBTC on 16th of November, original trade is approx $458 notionally, (TX Hash 0xcc40f753de6643cde7faa0bc469aac8226baa55994cc9ce874350e2dd6875dc2), placed by a Uniswap user with a limit allowing for 9% slippage + a 3.5% price impact on the at touch liquidity. This means if we trade 1.48x size ($677) (auto calc'd by a 500 step montecarlo/for loop) in front and unwound behind after fees we would make a PnL of ~$38.7869 assuming no competition for block space and we do not enter a gas auction off against another bot.
+
+![alt text](https://imgur.com/UnVnJCo)
