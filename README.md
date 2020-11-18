@@ -1,6 +1,6 @@
 
 # The Idea
-Buy infront of trades that are pending and arent confirmed, then unwind all in the same block. This program determines which trades are profitable to trade infront of, in what size and then execute. It also automanages delegate ERC20 approvals for transfers to the uniswap router contract.
+Buy infront of trades that are pending and arent confirmed, then unwind all in the same block, profiting from the trades market impact and potentially moving the trade right to its limit (if profitable). This program determines which trades are profitable to trade infront of, in what size and then execute. It also automanages delegate ERC20 approvals for transfers to the uniswap router contract.
 
 # uniRunner
 Front Running Uniswap, with anti scam token avoidance.
