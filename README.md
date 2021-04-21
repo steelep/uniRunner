@@ -1,5 +1,8 @@
 Identifying and back-running dual listed high impact transactions across Uniswap/Sushiswap, with anti honeypot token avoidance and a simple web interface.
 
+# Example WebInterface Output
+![](https://i.imgur.com/7GUFY9v.png)
+
 # The Idea
 Trades occuring on dual listed token pools between UniSwap and SushiSwap frequently cause material price impact, leading to intra block pricing innefficiencies.
 This tool, watches for pending transactions, calculates the pending impact on cross DEX pricing. Identifying if an exploitable pricing inefficency will exist, if so then it creates and executes a bundled set of transactions (buy/sell legs) via a specially constructed smart contract, immeadiately after the target transaction occurs (gas -1 wei) in the same block.
@@ -28,9 +31,8 @@ Purpose built smart contract, atomically executes cross dex uni/sushi arbitrage 
 Then
 - node uniSushi_Pricer.js
 
-#Next Steps / Status:
+# Next Steps / Status:
 This worked in September 2020 briefly before compeitition made this type of trade much more difficult. The underpinning idea is still sound and likely still to work when peered with a multinode infrastructure for fast transaction propigation. As it stands there are 5-15 competitor bots for each oppurtunity primarily composed of MEV pools/relayers who have a structual advantage in capturing these oppurtunities.
 
-# Example WebInterface Output
-![](https://i.imgur.com/7GUFY9v.png)
+
 
