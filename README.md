@@ -1,6 +1,6 @@
 # UniRunner
 
-NodeJS tool for identifying and back-running dual-listed high impact mempool transactions across Uniswap/Sushiswap. Monitoring is via a simple web interface/frontend and chain interactions via smart contract.
+NodeJS tool for identifying and back-running dual-listed high impact mempool transactions across UniSwap/SushiSwap. Monitoring is via a simple web interface/frontend and chain interactions via smart contract.
 
 ![](https://i.imgur.com/7GUFY9v.png)
 
