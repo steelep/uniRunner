@@ -1,7 +1,6 @@
+Identifying and back-running dual listed high impact transactions across Uniswap/Sushiswap, with anti honeypot token avoidance and a simple web interface.
 
 # The Idea
-Back Running high impact transactions across Uniswap/Sushiswap, with anti scam token avoidance and a simple web interface.
-
 Trades occuring on dual listed token pools between UniSwap and SushiSwap cause price impact leading to intra block pricing innefficiencies.
 This tool, watches for pending transactions, calculates the pending impact on cross DEX pricing. Identifying if an exploitable pricing inefficency will exist, if so then it creates and executes a bundled set of transactions (buy/sell legs) via a specially constructed smart contract, immeadiately after the target transaction occurs (gas -1 wei) in the same block.
 
