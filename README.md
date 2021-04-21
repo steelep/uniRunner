@@ -1,32 +1,35 @@
 
 # The Idea
-Buy infront of trades that are pending and arent confirmed, then unwind all in the same block, profiting from the trades market impact and potentially moving the trade right to its limit (if profitable). This program determines which trades are profitable to trade infront of, in what size and then execute. It also automanages delegate ERC20 approvals for transfers to the uniswap router contract.
+Back Running high impact transactions across Uniswap/Sushiswap, with anti scam token avoidance and a simple web interface.
 
-# uniRunner
-Front Running Uniswap, with anti scam token avoidance.
+Trades occuring on dual listed token pools between UniSwap and SushiSwap cause price impact leading to intra block pricing innefficiencies.
+This tool, watches for pending transactions, calculates the pending impact on cross DEX pricing. Identifying if an exploitable pricing inefficency will exist, if so then it creates and executes a bundled set of transactions (buy/sell legs) via a specially constructed smart contract, immeadiately after the target transaction occurs (gas -1 wei) in the same block.
 
-UniRunner - Subscribes to an ethereum nodes memory pool via WSS, listens for all new transactions, filters them for transactions destined for UniSwaps Router Contract, filters again for ETHtoTokenSwap transactions, does quite a bit of maths to work out the impact of a pending trade, figures out the optimal amount to trade infront of the ticket, determines PnL, if profitable and passes risk checks (including antiscam token checking - see UniApprover), then trade and report PnL. Will stop after a single trade.
+# uniSushi_Pricer.js
+Subscribes to an ethereum nodes memory pool via WSS, listens for all new transactions, filters  for transactions destined for UniSwaps V2 OR SushiSwaps router contracts, filters again for ETHtoTokenSwap transactions, does a bit of maths (via a quick manifold search) to work out the impact of a pending trade, figures out the next pricing state (impact of pools) on both DEX's after execution, determines PnL, if profitable and passes risk checks (including antiscam token checking - see UniApprover), then trade and report PnL. Will stop after a single trade.
 
-# uniApprover
-After getting rekt, by automatically buying tokens which I couldnt sell (about 1k USD!), I implemented an event scanner, which does exactly the same as above, but instead of executing, it forks the ethereum mainnet to memory and simulates the transactions, if the simulated account balance is positive (after fee's etc), then the token is added to a whitelist, this means its eligable to trade on uniRunner. Approved contracts are stored in approvedERC20.json and reread at uniRunner init.
+# pairDL.js
+Simple program to download and precompute all pairs on Sushi and UniSwap V2, finds the intersection of the set where one token is WETH, generates a list of cross DEX dual listed pairs where arbitrage possiblities can exist and outputs to intersectionWETH.json. This script should be run periodically to capture newly listed pairs.
 
+# uniApprover.js
+After getting rekt several times, by automatically buying tokens which I couldnt sell, I implemented a scanner, which does exactly the same as above, but instead of executing, it forks the ethereum mainnet to memory and simulates the transactions, if the simulated account balance is positive (after fee's etc), then the token is added to a whitelist, this means its eligable to trade on uniRunner. Approved contracts are stored in approvedERC20.json and reread at uniRunner init. This means some latency the first time a token is ever seen (todo, run checks when reading intersectionWETH.json)
 
-#To Run 
-- update the uniRunner Script as below
-Then
+# ArbProxy.sol 
+Purpose built smart contract, atomically executes cross dex uni/sushi arbitrage bundles. Whitelists deployers address as owner and only user.
+
+# To Run 
 - npm install
-- node uniApprover1.0.0.js
-- node uniRunner-v1.0.2.js
+- Update the executionSettings.json script, enter your private nodes IP/Port, enter your account address and private key
+- Confirm the risk parameters are suitable in riskParameters.json
+- Update private keys and WSS endpoints in truffle-config.js
+- Deploy ArbProxy.sol to mainnet via truffle in ./smartContractProxy/contracts 
 
-UniRunner need to add:
-- Add/Update Ethereum MainNet WSS Endpoint to line 17, go to Infura if you need a public one (you will probably get rate limited)
-- Line 44 & 43 add your ETH private key & Address.
-- Update add risk parameters on lines 36-41
+Then
+- node uniSushi_Pricer.js
 
-Status:
-Works, have made a few small trades - currently not profitable to run due to high ETH GAS prices. Have lost more by the program automatically buying scam tokens I cant unwind - which is now addressed. Not going to make anyone rich running this.
+#Status:
+Worked in September 2020 briefly before compeitition made this type of trade much more difficult. The underpinning idea is still sound and likely still to work when peered with a multinode infrastructure for fast transaction propigation.
 
-# Example Trade
-Front Running 0xBTC on 16th of November, original trade is approx $458 notionally, (TX Hash 0xcc40f753de6643cde7faa0bc469aac8226baa55994cc9ce874350e2dd6875dc2), placed by a Uniswap user with a limit allowing for 9% slippage + a 3.5% price impact on the at touch liquidity. This means if we trade 1.48x size ($677) (auto calc'd by a 500 step montecarlo/for loop) in front and unwound behind after fees we would make a PnL of ~$38.7869 assuming no competition for block space and we do not enter a gas auction off against another bot.
-![](https://i.imgur.com/UnVnJCo.png)
+# Example Output
+![](https://imgur.com/7GUFY9v)
 
