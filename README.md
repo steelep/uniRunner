@@ -17,7 +17,7 @@ Pretrade checks include gas/deadline on original token, a forked in-memory mainn
 Simple program to download and precompute all pairs on Sushi and UniSwap V2, finds the intersection of the set where one token is WETH, generates a list of cross DEX dual listed pairs where arbitrage possiblities can exist and outputs to intersectionWETH.json. This script should be run periodically to capture newly listed pairs.
 
 # uniApprover.js
-After getting rekt several times, by automatically buying tokens which I couldnt sell, I implemented a scanner, which does exactly the same as above, but instead of executing, it forks the ethereum mainnet to memory and simulates the transactions, if the simulated account balance is positive (after fee's etc), then the token is added to a whitelist, this means its eligable to trade on uniRunner. Approved contracts are stored in approvedERC20.json and reread at uniRunner init. This means some latency the first time a token is ever seen (todo, run checks when reading intersectionWETH.json)
+To avoid automatically buying tokens which I couldnt sell, I implemented a transaction validator, which forks the ethereum mainnet to memory and simulates the transactions, if the simulated account balance is positive (after fee's etc), then the token is added to a whitelist, this means its eligable to trade on uniSushi_Pricer. Approved contracts are stored in approvedERC20.json and reread at uniSushi_Pricer init. This means some latency the first time a token is ever seen (todo, run checks when reading intersectionWETH.json)
 
 # ArbProxy.sol 
 Purpose built smart contract, atomically executes cross dex uni/sushi arbitrage bundles. Whitelists deployers address as owner and only user.
