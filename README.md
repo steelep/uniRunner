@@ -1,6 +1,6 @@
 # UniRunner
 
-Identifying and back-running dual listed high impact transactions across Uniswap/Sushiswap, with honeypot token/transaction detection/avoidance and a simple web interface.
+NodeJS tool for identifying and back-running dual listed high impact transactions across Uniswap/Sushiswap, with honeypot token/transaction detection/avoidance. Interaction/monitoring is via a simple web interface/frontend and chain interactions via smart contract.
 
 ![](https://i.imgur.com/7GUFY9v.png)
 
@@ -25,6 +25,7 @@ To avoid automatically buying tokens which I couldnt sell, I implemented a trans
 Purpose built smart contract, atomically executes cross dex uni/sushi arbitrage bundles. Whitelists deployers address as owner and only user.
 
 # To Run 
+Requires a private GETH node(s)
 - npm install
 - Update the executionSettings.json script, enter your private nodes IP/Port, enter your account address and private key
 - Confirm the risk parameters are suitable in riskParameters.json
