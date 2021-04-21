@@ -1,6 +1,6 @@
 # UniRunner
 
-NodeJS tool for identifying and back-running dual listed high impact transactions across Uniswap/Sushiswap, with honeypot token/transaction detection/avoidance. Monitoring is via a simple web interface/frontend and chain interactions via smart contract.
+NodeJS tool for identifying and back-running dual listed high impact transactions as they enter the mempool across Uniswap/Sushiswap, with honeypot token/transaction detection/avoidance. Monitoring is via a simple web interface/frontend and chain interactions via smart contract.
 
 ![](https://i.imgur.com/7GUFY9v.png)
 
