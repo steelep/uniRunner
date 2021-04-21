@@ -1,0 +1,218 @@
+doctype html
+html
+    head
+        style
+            include ./style.css
+
+    title=title
+    body
+        h1 Uni v. Sushi Swap Dual Listed Pairs Arbitrage Trade Oppurtunities
+        table 
+            
+            tr
+                th 
+                    h3 Current Block
+                    
+                th 
+                    blockNumber= blockNumber
+                th
+            tr
+                td  
+                    h3 ETH/USD ($):  
+                td  
+                    ethVal= ethVal
+
+                td 
+                    
+            tr
+                td 
+                    h3 Trading Status:
+                td  
+                    tradingStatus= tradingStatus
+                td <button type="button" onclick="location.href='http://localhost:3000/toggleTrading';">Switch on/off</button>
+                       
+            tr
+                td 
+                    h3 Market Subscription Status:
+                td  
+                    subscribedStatus= subscribedStatus
+                td <button type="button" onclick="location.href='http://localhost:3000/subscribe';">Switch on/off</button>
+                                                
+            tr
+                td 
+                    h3 Dump state to disk
+                td  
+                    p ./dataDump.json
+                td <button type="button" onclick="location.href='http://localhost:3000/dumpDataToDisk';">Dump state</button>
+                                            
+
+                
+
+        
+ 
+    h3 Potentially profitable TX's:
+
+    table
+            thead
+                    th(colspan="9") Exploitable Transaction Details
+                    th(colspan="4") Uni/Sushi Reserves - Chain State
+                    th(colspan="4") Arbitrage Transaction Details/Outcome
+                    th(colspan="4") Pretrade Checks
+
+                            tr
+                            th tradeTime
+                            th txHash
+                            th txSender
+                            th symbol0
+                            th symbol1
+                            th origTradeSize
+                                div (eth)
+                            th origGasPrice
+                                div (gwei)
+
+                            th origOrderType
+                            th origTradeLocation
+
+                            th mispricingOrig 
+                                div (bp's)
+                            th mispricingAfterTrade
+                                div (bp's)
+                            th uniLiquidity
+                                div (eth)
+                            th sushiLiquidity
+                                div (eth)
+                            th arbTradeDirection
+                                div (eth)
+                            th gasCost
+                                div ($)
+                            th netArbPnL
+                                div (eth)
+                            th netArbPnL
+                                div ($)
+                            th arbCapitalReqd
+                                div (eth)
+                            th simulationStatus
+                            th preTradeRiskChecks
+
+
+            
+                    each item in oppList
+                        if(item.txDetails.tradeDetails.simPnLEth > 0)
+                            tr
+                                
+                                td=item.txDetails.tradeTime
+                                td
+                                    a(href='//etherscan.io/tx/' + item.txDetails.txInfo.hash) #{("0x.." + (item.txDetails.txInfo.hash.substr( item.txDetails.txInfo.hash.length - 5)))}
+                                td
+                                    a( href='//etherscan.io/address/' + item.txDetails.txInfo.from) #{("0x.." + (item.txDetails.txInfo.from.substr( item.txDetails.txInfo.from.length - 5)))}
+
+                                td=item.txDetails.tokenA.symbol
+                                td
+                                    a( href='//etherscan.io/address/' + item.txDetails.tokenB.address) #{(item.txDetails.tokenB.symbol)}
+                                td=(item.txDetails.txInfo.value/10e17).toFixed(4)
+                                td=(item.txDetails.txInfo.gasPrice/10e8)
+                                td=item.txDetails.txInputsDecoded.method
+
+                                td=item.txDetails.targetLabel
+                                td= ((item.txDetails.unisushiPairOrig - 1) * 100).toFixed(4)
+                                td= ((item.txDetails.unisushiPairAfter - 1) * 100).toFixed(4)
+
+                                td
+                                    a( href='//etherscan.io/address/' + item.txDetails.uniswapPairAddress) #{(item.txDetails.pairUniSwapOrig.reserveOf(item.txDetails.tokenA).toFixed(4))}
+                                
+                                td
+                                    a( href='//etherscan.io/address/' + item.txDetails.sushiswapPairAddress) #{(item.txDetails.pairSushiSwapOrig.reserveOf(item.txDetails.tokenA).toFixed(4))}
+
+
+                                td=item.txDetails.tradeDetails.ethDirection                                 
+                                td=item.txDetails.tradeDetails.gasCostUSD.toFixed(4)
+                                td=parseFloat(item.txDetails.tradeDetails.simPnLEth).toFixed(4)
+                                td=item.txDetails.tradeDetails.simPnLUSD.toFixed(4)
+                                td=parseFloat(item.txDetails.tradeDetails.tradeSize.raw / 10e17).toFixed(5)
+                                td=item.complianceDetails.externalCompliance.status
+                                td=item.complianceDetails.internalCompliance.internalPreTradePass
+
+
+br
+h3 Non profitable TX's
+table
+            thead
+                    th(colspan="9") Exploitable Transaction Details
+                    th(colspan="4") Uni/Sushi Reserves - Chain State
+                    th(colspan="4") Arbitrage Transaction Details/Outcome
+                    th(colspan="4") Pretrade Checks
+
+                            tr
+                            th tradeTime
+                            th txHash
+                            th txSender
+                            th symbol0
+                            th symbol1
+                            th origTradeSize
+                                div (eth)
+                            th origGasPrice
+                                div (gwei)
+                            th origOrderType
+
+                            th origTradeLocation
+
+                            th mispricingOrig 
+                                div (bp's)
+                            th mispricingAfterTrade
+                                div (bp's)
+                            th uniLiquidity
+                                div (eth)
+                            th sushiLiquidity
+                                div (eth)
+                            th arbTradeDirection
+                                div (eth)
+                            th gasCost
+                                div ($)
+                            th netArbPnL
+                                div (eth)
+                            th netArbPnL
+                                div ($)
+                            th arbCapitalReqd
+                                div (eth)
+                            th simulationStatus
+                            th preTradeRiskChecks
+
+            
+                    each item in oppList
+                        if(item.txDetails.tradeDetails.simPnLEth <= 0)
+                            tr
+                                
+                                td=item.txDetails.tradeTime
+                                td
+                                    a(href='//etherscan.io/tx/' + item.txDetails.txInfo.hash) #{("0x.." + (item.txDetails.txInfo.hash.substr( item.txDetails.txInfo.hash.length - 5)))}
+                                td
+                                    a( href='//etherscan.io/address/' + item.txDetails.txInfo.from) #{("0x.." + (item.txDetails.txInfo.from.substr( item.txDetails.txInfo.from.length - 5)))}
+
+                                td=item.txDetails.tokenA.symbol
+                                td
+                                    a( href='//etherscan.io/address/' + item.txDetails.tokenB.address) #{(item.txDetails.tokenB.symbol)}
+                                td=(item.txDetails.txInfo.value/10e17).toFixed(4)
+                                td=(item.txDetails.txInfo.gasPrice/10e8)
+                                td=item.txDetails.txInputsDecoded.method
+                                td=item.txDetails.targetLabel
+                                td= ((item.txDetails.unisushiPairOrig - 1) * 100).toFixed(4)
+                                td= ((item.txDetails.unisushiPairAfter - 1) * 100).toFixed(4)
+
+                                td
+                                    a( href='//etherscan.io/address/' + item.txDetails.uniswapPairAddress) #{(item.txDetails.pairUniSwapOrig.reserveOf(item.txDetails.tokenA).toFixed(4))}
+                                
+                                td
+                                    a( href='//etherscan.io/address/' + item.txDetails.sushiswapPairAddress) #{(item.txDetails.pairSushiSwapOrig.reserveOf(item.txDetails.tokenA).toFixed(4))}
+
+
+                                td=item.txDetails.tradeDetails.ethDirection                               
+                                td=item.txDetails.tradeDetails.gasCostUSD.toFixed(4)
+                                td=parseFloat(item.txDetails.tradeDetails.simPnLEth).toFixed(4)
+                                td=item.txDetails.tradeDetails.simPnLUSD.toFixed(4)
+                                td=parseFloat(item.txDetails.tradeDetails.tradeSize.raw / 10e17).toFixed(5)
+                                td=item.complianceDetails.externalCompliance.status
+                                td=item.complianceDetails.internalCompliance.internalPreTradePass
+
+
+
+

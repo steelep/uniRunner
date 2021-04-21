@@ -1,0 +1,19 @@
+body {
+    background-color: wheat;
+    font-size: 20px;
+
+}
+table {
+  border-collapse: collapse;
+}
+
+td, th {
+  border: 1px solid rgb(55, 55, 55);
+  padding: 0.2rem;
+  text-align: left;
+}
+
+success {
+    text-decoration-color:yellowgreen;
+
+}
