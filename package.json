@@ -1,12 +1,12 @@
 {
-  "name": "uniRunner-v1.0.0.js",
+  "name": "UniRunner",
   "type": "commonjs",
   "version": "1.0.0",
   "description": "1",
-  "main": "testApp.js",
+  "main": "uniSushi_Pricer.js",
   "protocol": "inspector",
   "scripts": {
-    "start": "node uniRunner-v1.0.0.js"
+    "start": "node uniSushi_Pricer.js"
   },
   "author": "",
   "license": "ISC",
@@ -16,8 +16,10 @@
     "ethereum-input-data-decoder": "^0.3.1",
     "ethereumjs-tx": "^2.1.2",
     "ethers": "^5.0.19",
-    "ganache-cli": "^6.12.1",
-    "ganache-core": "^2.13.1",
+    "express": "^4.17.1",
+    "ganache-cli": "^6.12.2",
+    "jade": "^1.11.0",
+    "pug": "^3.0.0",
     "serve": "^11.3.2",
     "web3": "^1.3.0",
     "worker-farm": "^1.7.0",

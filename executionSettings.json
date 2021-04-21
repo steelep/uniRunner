@@ -1,0 +1,11 @@
+{"accSender":"0xDEADBEEF",
+	"pvtKey":"enter-here",
+	"productionServer":"ws://35.173.47.6:8546",
+	"gasCostUnitsForSC":"300000",
+	"gasCostUnitsForPricing":"221000",
+	"ethValUSD":"697",
+	"deployedContract":"0xDEADBEEF",
+	"enforceNPV":"true"
+}
+
+
