@@ -1,8 +1,10 @@
 # UniRunner
 
-Identifying and back-running dual listed high impact transactions across Uniswap/Sushiswap, with anti honeypot token avoidance and a simple web interface.
+Identifying and back-running dual listed high impact transactions across Uniswap/Sushiswap, with honeypot token/transaction detection/avoidance and a simple web interface.
 
 ![](https://i.imgur.com/7GUFY9v.png)
+
+TLDR docs:
 
 # The Idea
 Trades occuring on dual listed token pools between UniSwap and SushiSwap frequently cause material price impact, leading to intra block pricing innefficiencies.
