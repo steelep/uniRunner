@@ -8,7 +8,7 @@ TLDR docs:
 
 # The Idea
 Trades occurring on dual-listed token pools between UniSwap and SushiSwap frequently cause material price impact, leading to intrablock pricing inefficiencies.
-This tool, watches for pending transactions, calculates the pending impact on cross DEX pricing. Identifying if an exploitable pricing inefficiency will exist, if so then it creates and executes a bundled set of transactions (buy/sell legs) via a specially constructed smart contract, immediately after the target transaction occurs (gas -1 wei) in the same block.
+This tool, watches for pending transactions, calculates the pending impact on cross DEX pricing. Identifying if an exploitable pricing inefficiency will exist, if so then it creates and executes a bundled set of transactions (buy/sell legs) via a specially constructed smart contract, immediately after the target transaction occurs (gas -1 wei) in the same block. If the smart contract transaction fails (likely due to placement in the block), both legs revert and gas incurred is minimal.
 
 # uniSushi_Pricer.js
 Subscribes to an ethereum nodes memory pool via WSS, listens for all new transactions, filters for transactions destined for UniSwaps V2 OR SushiSwaps router contracts, filters again for transaction type (e.g. ETHtoTokenSwap or TokenToEthSwap), do a bit of maths (via a quick manifold search) to work out the impact of a pending trade, figures out the next pricing state (impact of pools) on both DEX's after assumed execution, calculate opportunity size, determine PnL, if the opportunity is profitable net of costs and it passes risk checks, then sends a trade via ArbProxy.sol and reports the PnL. Trading halts after a single trade - can be turned back on via web interface.
