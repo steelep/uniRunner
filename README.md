@@ -1,6 +1,6 @@
 # UniRunner
 
-NodeJS tool for identifying and back-running dual listed high impact transactions as they enter the mempool across Uniswap/Sushiswap, with honeypot token/transaction detection/avoidance. Monitoring is via a simple web interface/frontend and chain interactions via smart contract.
+NodeJS tool for identifying and back-running dual listed high impact mempool transactions across Uniswap/Sushiswap. Monitoring is via a simple web interface/frontend and chain interactions via smart contract.
 
 ![](https://i.imgur.com/7GUFY9v.png)
 
@@ -19,7 +19,7 @@ Pretrade checks include gas/deadline on original token, a forked in-memory mainn
 Simple program to download and precompute all pairs on Sushi and UniSwap V2, finds the intersection of the set where one token is WETH, generates a list of cross DEX dual listed pairs where arbitrage possiblities can exist and outputs to intersectionWETH.json. This script should be run periodically to capture newly listed pairs.
 
 # uniApprover.js
-To avoid automatically buying tokens which I couldnt sell, I implemented a transaction validator, which forks the ethereum mainnet to memory and simulates the transactions, if the simulated account balance is positive (after fee's etc), then the token is added to a whitelist, this means its eligable to trade on uniSushi_Pricer. Approved contracts are stored in approvedERC20.json and reread at uniSushi_Pricer init. This means some latency the first time a token is ever seen (todo, run checks when reading intersectionWETH.json)
+To avoid automatically buying tokens which I couldnt sell (honeypots) or becoming ensared by malicious honeypot transaction setups, I implemented a transaction validator, which forks the ethereum mainnet to memory and simulates the transactions. If the simulated account balance is equal or positive, then the token is added to a whitelist or trade authorised, this means its eligable to trade on uniSushi_Pricer. Approved contracts are stored in approvedERC20.json and reread at uniSushi_Pricer init. This means some latency the first time a token (2-3 seconds) is ever seen (todo, run checks when reading intersectionWETH.json)
 
 # ArbProxy.sol 
 Purpose built smart contract, atomically executes cross dex uni/sushi arbitrage bundles. Whitelists deployers address as owner and only user.
