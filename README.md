@@ -36,6 +36,6 @@ Then
 - node uniSushi_Pricer.js
 
 # Next Steps / Status:
-This worked in September 2020 briefly before competition made this type of trade much more difficult. The underpinning idea is still sound and likely still to work when peered with a multinode infrastructure for fast transaction propagation. As it stands there are ~2-15 competitor bots for each opportunity primarily composed of MEV pools/relayers who have a structural advantage in capturing these opportunities rendering the current setup uncompetitive.
+This worked in September 2020 briefly before competition (See: Private relay networks, private mempools and the emergence of the "Flashbots" project) made this type of trade much more difficult. The underpinning idea is still sound and likely still to work when peered with a multinode infrastructure for fast transaction propagation. As it stands there are ~2-15 competitor bots for each opportunity primarily composed of MEV pools/relayers who have a structural advantage in capturing these opportunities rendering the current setup uncompetitive.
 
 
